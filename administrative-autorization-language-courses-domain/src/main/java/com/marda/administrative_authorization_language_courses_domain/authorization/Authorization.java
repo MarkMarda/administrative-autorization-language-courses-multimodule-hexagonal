@@ -3,7 +3,6 @@ package com.marda.administrative_authorization_language_courses_domain.authoriza
 import com.marda.administrative_authorization_language_courses_domain.base.Identity;
 import com.marda.administrative_authorization_language_courses_domain.evaluation.Evaluation;
 import com.marda.administrative_authorization_language_courses_domain.evaluation.Observation;
-import com.marda.administrative_authorization_language_courses_domain.exceptions.DomainException;
 import com.marda.administrative_authorization_language_courses_domain.payment.Payment;
 import com.marda.administrative_authorization_language_courses_domain.payment.PaymentStatus;
 import com.marda.administrative_authorization_language_courses_domain.subsanation.Subsanation;
@@ -11,7 +10,7 @@ import com.marda.administrative_authorization_language_courses_domain.subsanatio
 import java.time.Instant;
 import java.util.*;
 
-public final class AuthorizationRequest {
+public final class Authorization {
     private final Identity id;
     private final AuthorizationType type;
     private final Identity studentId;
@@ -28,7 +27,7 @@ public final class AuthorizationRequest {
     private final List<TrackingEntry> tracking = new ArrayList<>();
     private final List<Subsanation> subsanations = new ArrayList<>();
 
-    public AuthorizationRequest(
+    public Authorization(
             Identity id,
             AuthorizationType type,
             Identity studentId,
@@ -48,8 +47,8 @@ public final class AuthorizationRequest {
         }
     }
 
-    public void submit() throws DomainException {
-        if (status != AuthorizationStatus.DRAFT) throw new DomainException("Only draft can be submitted");
+    public void submit() throws AuthorizationException {
+        if (status != AuthorizationStatus.DRAFT) throw new AuthorizationException("Only draft can be submitted");
         // Validate mandatory requirements present? (domain rule)
         this.status = AuthorizationStatus.SUBMITTED;
         addTracking(statusPrevious("DRAFT"), "SUBMITTED", null, "Solicitud enviada por el estudiante");
