@@ -16,18 +16,6 @@ public class CourseCommandCreateService implements CourseCommandCreateUseCase {
 
     @Override
     public void createCourse(CreateCourseCommand createCourseCommand) throws CourseApplicationException {
-        if (createCourseCommand.code() == null || createCourseCommand.code().isBlank()) {
-            throw new CourseApplicationException("Course code is required");
-        }
-
-        if (createCourseCommand.name() == null || createCourseCommand.name().isBlank()) {
-            throw new CourseApplicationException("Course name is required");
-        }
-
-        if (createCourseCommand.level() == null || createCourseCommand.level().isBlank()) {
-            throw new CourseApplicationException("Course level is required");
-        }
-
         Identity id = Identity.generate();
 
         Course course = new Course(
