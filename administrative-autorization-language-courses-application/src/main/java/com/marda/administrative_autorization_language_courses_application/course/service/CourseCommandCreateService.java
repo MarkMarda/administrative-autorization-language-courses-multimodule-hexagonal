@@ -2,6 +2,7 @@ package com.marda.administrative_autorization_language_courses_application.cours
 
 import com.marda.administrative_authorization_language_courses_domain.base.Identity;
 import com.marda.administrative_authorization_language_courses_domain.course.Course;
+import com.marda.administrative_authorization_language_courses_domain.exceptions.DomainException;
 import com.marda.administrative_autorization_language_courses_application.course.exception.CourseApplicationException;
 import com.marda.administrative_autorization_language_courses_application.course.port.in.CourseCommandCreateUseCase;
 import com.marda.administrative_autorization_language_courses_application.course.port.in.dtos.CreateCourseCommand;
@@ -18,13 +19,18 @@ public class CourseCommandCreateService implements CourseCommandCreateUseCase {
     public void createCourse(CreateCourseCommand createCourseCommand) throws CourseApplicationException {
         Identity id = Identity.generate();
 
-        Course course = new Course(
-                id,
-                createCourseCommand.code(),
-                createCourseCommand.name(),
-                createCourseCommand.level()
-        );
+        try {
+            Course course = new Course(
+                    id,
+                    createCourseCommand.code(),
+                    createCourseCommand.name(),
+                    createCourseCommand.level()
+            );
 
-        courseCommandCreatePort.saveCourse(course);
+            courseCommandCreatePort.saveCourse(course);
+        } catch (DomainException e) {
+            throw new CourseApplicationException(e);
+        }
+
     }
 }

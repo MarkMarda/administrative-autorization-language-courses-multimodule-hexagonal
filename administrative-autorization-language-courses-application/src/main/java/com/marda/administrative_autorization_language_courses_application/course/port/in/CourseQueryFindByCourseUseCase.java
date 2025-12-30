@@ -7,5 +7,5 @@ import java.util.List;
 
 @FunctionalInterface
 public interface CourseQueryFindByCourseUseCase {
-    List<Course> findByCourse(String course) throws CourseApplicationException;
+    List<Course> findByCourse(String name) throws CourseApplicationException;
 }

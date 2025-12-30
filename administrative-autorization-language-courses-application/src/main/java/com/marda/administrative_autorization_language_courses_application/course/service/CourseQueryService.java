@@ -15,7 +15,7 @@ public class CourseQueryService implements CourseQueryFindByCourseUseCase {
     }
 
     @Override
-    public List<Course> findByCourse(String course) throws CourseApplicationException {
-        return courseQueryFindByCoursePort.findByCourse(course);
+    public List<Course> findByCourse(String name) throws CourseApplicationException {
+        return courseQueryFindByCoursePort.findByCourse(name);
     }
 }
