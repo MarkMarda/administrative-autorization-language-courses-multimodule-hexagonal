@@ -1,0 +1,10 @@
+package com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.student.repository;
+
+import com.marda.administrative_authorization_language_courses_domain.base.Identity;
+import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.base.GenericRepository;
+import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.student.entity.StudentEntity;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface StudentRepository extends GenericRepository<StudentEntity, Identity> {
+}

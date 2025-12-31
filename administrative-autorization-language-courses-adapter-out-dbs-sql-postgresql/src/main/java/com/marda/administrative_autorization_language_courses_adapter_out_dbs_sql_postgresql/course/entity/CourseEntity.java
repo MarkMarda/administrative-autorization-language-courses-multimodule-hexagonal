@@ -22,7 +22,7 @@ import java.util.UUID;
 public class CourseEntity extends GenericEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column
+    @Column(name = "course_id", nullable = false)
     private Identity id;
 
     //B2-2025-ENG
