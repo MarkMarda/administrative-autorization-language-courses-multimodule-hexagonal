@@ -1,0 +1,10 @@
+package com.marda.administrative_autorization_language_courses_adapter_in_rest.course.controller;
+
+import com.marda.administrative_autorization_language_courses_adapter_in_rest.constants.APIConstants;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import static com.marda.administrative_autorization_language_courses_adapter_in_rest.constants.APIConstants.API_COURSE_QUERY;
+
+@RequestMapping(API_COURSE_QUERY)
+public interface CourseQueryRestController {
+}
