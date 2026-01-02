@@ -1,0 +1,59 @@
+package com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.student.mapper;
+
+import com.marda.administrative_authorization_language_courses_domain.exceptions.DomainException;
+import com.marda.administrative_authorization_language_courses_domain.person.Student;
+import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.student.entity.StudentEntity;
+import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.student.exception.StudentAdapterDBException;
+
+import java.util.List;
+
+public class StudentAdapterDBMapperImpl implements StudentAdapterDBMapper {
+    @Override
+    public StudentEntity toEntity(Student student) throws StudentAdapterDBException {
+        return StudentEntity
+                .builder()
+                .id(student.getId())
+                .firstName(student.getFirstName())
+                .middleName(student.getMiddleName())
+                .firstSurname(student.getFirstSurname())
+                .secondSurname(student.getSecondSurname())
+                .birthDate(student.getBirthDate())
+                .idCredential(student.getIdCredential())
+                .enrolledLanguageCourses(student.getEnrolledLanguageCourses())
+                .phoneNumber(student.getPhoneNumber())
+                .email(student.getEmail())
+                .build();
+    }
+
+    @Override
+    public Student toDomain(StudentEntity studentEntity) throws StudentAdapterDBException {
+        try {
+            return new Student(
+                    studentEntity.getId(),
+                    studentEntity.getFirstName(),
+                    studentEntity.getMiddleName(),
+                    studentEntity.getFirstSurname(),
+                    studentEntity.getSecondSurname(),
+                    studentEntity.getBirthDate(),
+                    studentEntity.getIdCredential(),
+                    studentEntity.getEnrolledLanguageCourses(),
+                    studentEntity.getPhoneNumber(),
+                    studentEntity.getEmail()
+            );
+        } catch (DomainException e) {
+            throw new StudentAdapterDBException(e);
+        }
+
+    }
+
+    @Override
+    public List<Student> toDomain(List<StudentEntity> studentEntityList) throws StudentAdapterDBException {
+        return studentEntityList.stream().map(studentEntity -> {
+            try {
+                return toDomain(studentEntity);
+            } catch (StudentAdapterDBException e) {
+                throw new RuntimeException(e);
+            }
+        }).toList();
+    }
+}

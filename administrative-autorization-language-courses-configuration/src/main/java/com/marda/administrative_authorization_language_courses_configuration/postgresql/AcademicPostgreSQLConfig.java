@@ -1,0 +1,89 @@
+package com.marda.administrative_authorization_language_courses_configuration.postgresql;
+
+import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.course.adapter.command.CourseCommandCreatePostgreSQLDBAdapter;
+import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.course.adapter.query.CourseQueryPostgreSQLDBAdapter;
+import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.course.mapper.CourseAdapterDBMapper;
+import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.course.mapper.CourseAdapterDBMapperImpl;
+import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.course.repository.CourseRepository;
+import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.student.adapter.command.StudentCommandCreatePostgreSQLDBAdapter;
+import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.student.mapper.StudentAdapterDBMapper;
+import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.student.mapper.StudentAdapterDBMapperImpl;
+import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.student.repository.StudentRepository;
+import com.marda.administrative_autorization_language_courses_application.course.port.out.CourseCommandCreatePort;
+import com.marda.administrative_autorization_language_courses_application.course.port.out.CourseQueryFindByCoursePort;
+import com.marda.administrative_autorization_language_courses_application.course.service.CourseCommandCreateService;
+import com.marda.administrative_autorization_language_courses_application.course.service.CourseQueryService;
+import com.marda.administrative_autorization_language_courses_application.student.port.out.StudentCommandCreatePort;
+import com.marda.administrative_autorization_language_courses_application.student.service.StudentCommandCreateService;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+@EntityScan({
+        "com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.course.entity",
+        "com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.student.entity"
+})
+@EnableJpaRepositories(basePackages = {
+        "com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.course.repository",
+        "com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.student.repository"
+})
+@Configuration
+public class AcademicPostgreSQLConfig {
+    //Application - Service
+    @Bean
+    CourseCommandCreateService courseCommandCreateService(
+            CourseCommandCreatePort courseCommandCreatePort
+    ) {
+        return new CourseCommandCreateService(courseCommandCreatePort);
+    }
+
+    @Bean
+    CourseQueryService courseQueryService(
+            CourseQueryFindByCoursePort courseQueryFindByCoursePort
+    ) {
+        return new CourseQueryService(courseQueryFindByCoursePort);
+    }
+
+    @Bean
+    StudentCommandCreateService studentCommandCreateService(
+            StudentCommandCreatePort studentCommandCreatePort
+    ) {
+        return new StudentCommandCreateService(studentCommandCreatePort);
+    }
+
+    //Adapters
+    // Adapter - DBs - PostgreSQL
+    @Bean
+    CourseCommandCreatePostgreSQLDBAdapter courseCommandCreatePostgreSQLDBAdapter(
+            CourseRepository courseRepository,
+            CourseAdapterDBMapper courseAdapterDBMapper
+    ) {
+        return new CourseCommandCreatePostgreSQLDBAdapter(courseRepository, courseAdapterDBMapper);
+    }
+
+    @Bean
+    CourseQueryPostgreSQLDBAdapter courseQueryPostgreSQLDBAdapter(
+            CourseRepository courseRepository,
+            CourseAdapterDBMapper courseAdapterDBMapper
+    ) {
+        return new CourseQueryPostgreSQLDBAdapter(courseRepository, courseAdapterDBMapper);
+    }
+
+    @Bean
+    StudentCommandCreatePostgreSQLDBAdapter studentCommandCreatePostgreSQLDBAdapter(
+            StudentRepository studentRepository,
+            StudentAdapterDBMapper studentAdapterDBMapper
+    ) {
+        return new StudentCommandCreatePostgreSQLDBAdapter(studentRepository, studentAdapterDBMapper);
+    }
+
+    //Mappers
+    StudentAdapterDBMapper studentAdapterDBMapper() {
+        return new StudentAdapterDBMapperImpl();
+    }
+
+    CourseAdapterDBMapper courseAdapterDBMapper() {
+        return new CourseAdapterDBMapperImpl();
+    }
+}
