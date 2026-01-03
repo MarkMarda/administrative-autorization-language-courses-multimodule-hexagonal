@@ -1,0 +1,17 @@
+package com.marda.administrative_autorization_language_courses_adapter_in_rest.course.controller;
+
+import com.marda.administrative_autorization_language_courses_adapter_in_rest.course.dtos.CourseCreateRequestDto;
+import com.marda.administrative_autorization_language_courses_adapter_in_rest.course.dtos.CourseCreateResponseDto;
+import com.marda.administrative_autorization_language_courses_adapter_in_rest.course.exception.CourseAdapterRestException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import static com.marda.administrative_autorization_language_courses_adapter_in_rest.constants.APIConstants.API_COURSE_COMMAND;
+
+@RequestMapping(API_COURSE_COMMAND)
+public interface CourseCommandRestController {
+    @PostMapping
+    ResponseEntity<CourseCreateResponseDto> createCourse(@RequestBody CourseCreateRequestDto courseCreateRequestDto) throws CourseAdapterRestException;
+}

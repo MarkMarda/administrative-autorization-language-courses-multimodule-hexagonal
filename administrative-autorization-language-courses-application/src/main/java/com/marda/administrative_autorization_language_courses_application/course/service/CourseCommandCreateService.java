@@ -16,7 +16,7 @@ public class CourseCommandCreateService implements CourseCommandCreateUseCase {
     }
 
     @Override
-    public void createCourse(CreateCourseCommand createCourseCommand) throws CourseApplicationException {
+    public Course createCourse(CreateCourseCommand createCourseCommand) throws CourseApplicationException {
         Identity id = Identity.generate();
 
         try {
@@ -27,7 +27,7 @@ public class CourseCommandCreateService implements CourseCommandCreateUseCase {
                     createCourseCommand.level()
             );
 
-            courseCommandCreatePort.saveCourse(course);
+            return courseCommandCreatePort.saveCourse(course);
         } catch (DomainException e) {
             throw new CourseApplicationException(e);
         }
