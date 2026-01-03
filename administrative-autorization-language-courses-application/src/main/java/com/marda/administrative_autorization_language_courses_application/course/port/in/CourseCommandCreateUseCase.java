@@ -1,9 +1,10 @@
 package com.marda.administrative_autorization_language_courses_application.course.port.in;
 
+import com.marda.administrative_authorization_language_courses_domain.course.Course;
 import com.marda.administrative_autorization_language_courses_application.course.exception.CourseApplicationException;
 import com.marda.administrative_autorization_language_courses_application.course.port.in.dtos.CreateCourseCommand;
 
 @FunctionalInterface
 public interface CourseCommandCreateUseCase {
-    void createCourse(CreateCourseCommand createCourseCommand) throws CourseApplicationException;
+    Course createCourse(CreateCourseCommand createCourseCommand) throws CourseApplicationException;
 }
