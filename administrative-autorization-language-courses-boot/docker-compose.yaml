@@ -1,0 +1,78 @@
+services:
+  api-administrative-autorization-language-courses:
+    image: api-administrative-autorization-language-courses
+    build:
+      context: ..
+      dockerfile: administrative-autorization-language-courses-boot/Dockerfile
+    container_name: api-administrative-autorization-language-courses
+    environment:
+      POSTGRESQL_DB_USER: ${POSTGRESQL_DB_USER}
+      POSTGRESQL_DB_PASSWORD: ${POSTGRESQL_DB_PASSWORD}
+      POSTGRESQL_DB_NAME: ${POSTGRESQL_DB_NAME}
+      POSTGRESQL_DB_HOST: db-postgresql
+      POSTGRESQL_DB_PORT: ${POSTGRESQL_DB_PORT}
+      PORT: ${PORT}
+    ports:
+      - "${PORT}:${PORT}"
+    #expose:
+      #- "${PORT}:${PORT}"
+    networks:
+      - administrative-authorization
+    depends_on:
+      db-postgresql:
+        condition: service_healthy
+    restart: on-failure
+
+
+  db-postgresql:
+    image: postgres:latest
+    container_name: academic-postgresql
+    restart: always
+    ports:
+      - "${POSTGRESQL_DB_PORT}:${POSTGRESQL_DB_PORT}"
+    #expose:
+      #- "${POSTGRESQL_DB_PORT}:${POSTGRESQL_DB_PORT}"
+    networks:
+      - administrative-authorization
+    environment:
+      POSTGRES_USER: ${POSTGRESQL_DB_USER}
+      POSTGRES_PASSWORD: ${POSTGRESQL_DB_PASSWORD}
+      POSTGRES_DB: ${POSTGRESQL_DB_NAME}
+    healthcheck:
+      # https://github.com/peter-evans/docker-compose-healthcheck/pull/17
+      test: pg_isready -U ${POSTGRESQL_DB_USER} -d ${POSTGRESQL_DB_NAME}
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      # start_period: 10s
+    volumes:
+      - ./postgres:/var/lib/postgresql
+      #- ./postgres:/var/lib/postgresql/data
+      #- /var/run/docker.sock:/var/run/docker.sock
+
+  # In case you need if not comment this
+  pgadmin:
+    depends_on:
+      - db-postgresql
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+      # PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: 'False'
+      # PGADMIN_CONFIG_CONSOLE_LOG_LEVEL: '10'
+      # PGADMIN_CONFIG_ENABLE_PSQL: 'True'
+    ports:
+      - 80:80
+    #expose:
+      #- 80:80
+    networks:
+      - administrative-authorization
+    volumes:
+      - ./pgadmin:/var/lib/pgadmin
+      - ./pgadmin:/certs/server.cert
+      - ./pgadmin:/certs/server.key
+      - ./pgadmin:/pgadmin4/servers.json
+
+networks:
+  administrative-authorization:
+    driver: bridge

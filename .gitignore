@@ -39,4 +39,6 @@ build/
 .env
 
 ### VOLUMES ###
+administrative-autorization-language-courses-boot/pgadmin
+administrative-autorization-language-courses-boot/postgres
 

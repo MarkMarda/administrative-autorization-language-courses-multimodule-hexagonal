@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface CourseRepository extends GenericRepository<CourseEntity, Identity> {
-    List<CourseEntity> findByCourse(String name);
+    List<CourseEntity> findByName(String name);
 }

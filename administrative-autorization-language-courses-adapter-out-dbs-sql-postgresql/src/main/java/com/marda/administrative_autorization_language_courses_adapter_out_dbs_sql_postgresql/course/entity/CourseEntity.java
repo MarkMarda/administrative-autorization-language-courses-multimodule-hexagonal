@@ -2,6 +2,7 @@ package com.marda.administrative_autorization_language_courses_adapter_out_dbs_s
 
 import com.marda.administrative_authorization_language_courses_domain.base.Identity;
 import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.base.GenericEntity;
+import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.course.mapper.IdentityAttributeConverter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.util.UUID;
 
@@ -21,7 +24,9 @@ import java.util.UUID;
 @Entity(name = "CourseEntity")
 public class CourseEntity extends GenericEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @JdbcTypeCode(SqlTypes.UUID)
+    //@GeneratedValue(strategy = GenerationType.UUID)
+    @Convert(converter = IdentityAttributeConverter.class)
     @Column(name = "course_id", nullable = false)
     private Identity id;
 
