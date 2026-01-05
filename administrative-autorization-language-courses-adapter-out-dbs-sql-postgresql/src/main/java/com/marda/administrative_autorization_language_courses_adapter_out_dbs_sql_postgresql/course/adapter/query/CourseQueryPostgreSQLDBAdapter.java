@@ -25,7 +25,7 @@ public class CourseQueryPostgreSQLDBAdapter implements CourseQueryFindByCoursePo
     @Override
     public List<Course> findByCourse(String name) throws CourseApplicationException {
         try {
-            return courseAdapterDBMapper.toDomain(courseRepository.findByCourse(name));
+            return courseAdapterDBMapper.toDomain(courseRepository.findByName(name));
         } catch (CourseAdapterDBException e) {
             throw new CourseApplicationException(e);
         }

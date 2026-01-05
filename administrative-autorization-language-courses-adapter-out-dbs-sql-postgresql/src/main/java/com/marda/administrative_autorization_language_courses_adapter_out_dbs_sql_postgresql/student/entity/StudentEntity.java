@@ -3,6 +3,8 @@ package com.marda.administrative_autorization_language_courses_adapter_out_dbs_s
 import com.marda.administrative_authorization_language_courses_domain.base.Identity;
 import com.marda.administrative_authorization_language_courses_domain.person.vo.Email;
 import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.base.GenericEntity;
+import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.course.mapper.IdentityAttributeConverter;
+import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.student.mapper.EmailAttributeConverter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -10,6 +12,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.util.List;
 
@@ -22,7 +26,9 @@ import java.util.List;
 @Entity(name = "StudentEntity")
 public class StudentEntity extends GenericEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @JdbcTypeCode(SqlTypes.UUID)
+    //@GeneratedValue(strategy = GenerationType.UUID)
+    @Convert(converter = IdentityAttributeConverter.class)
     @Column(name = "student_id", nullable = false)
     private Identity id;
 
@@ -55,6 +61,8 @@ public class StudentEntity extends GenericEntity {
     @Column(name = "student_phone_number")
     private String phoneNumber;
 
+    @JdbcTypeCode(SqlTypes.VARCHAR)
+    @Convert(converter = EmailAttributeConverter.class)
     @NotNull(message = "email is required")
     @Column(name = "student_email")
     private Email email;
