@@ -1,5 +1,6 @@
 package com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.student.mapper;
 
+import com.marda.administrative_authorization_language_courses_domain.base.Identity;
 import com.marda.administrative_authorization_language_courses_domain.exceptions.DomainException;
 import com.marda.administrative_authorization_language_courses_domain.person.Student;
 import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.student.entity.StudentEntity;
@@ -12,7 +13,7 @@ public class StudentAdapterDBMapperImpl implements StudentAdapterDBMapper {
     public StudentEntity toEntity(Student student) throws StudentAdapterDBException {
         return StudentEntity
                 .builder()
-                .id(student.getId())
+                .id(student.getId().asUuid())
                 .firstName(student.getFirstName())
                 .middleName(student.getMiddleName())
                 .firstSurname(student.getFirstSurname())
@@ -29,7 +30,7 @@ public class StudentAdapterDBMapperImpl implements StudentAdapterDBMapper {
     public Student toDomain(StudentEntity studentEntity) throws StudentAdapterDBException {
         try {
             return new Student(
-                    studentEntity.getId(),
+                    Identity.of(studentEntity.getId()),
                     studentEntity.getFirstName(),
                     studentEntity.getMiddleName(),
                     studentEntity.getFirstSurname(),

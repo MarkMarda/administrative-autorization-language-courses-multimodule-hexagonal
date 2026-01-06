@@ -61,77 +61,7 @@ public class AcademicPostgreSQLConfig {
                 .build();
     }
 
-//    @Bean(name = "entityManagerFactory")
-//    public LocalContainerEntityManagerFactoryBean entityManagerFactory(
-//            @Qualifier("academicDataSource") DataSource dataSource
-//    ) {
-//        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-//        em.setDataSource(dataSource);
-//        // Packages where are @Entity
-//        em.setPackagesToScan(
-//                "com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.course.entity",
-//                "com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.student.entity"
-//        );
-//
-//        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-//        em.setJpaVendorAdapter(vendorAdapter);
-//
-//        return em;
-//    }
-
-//    @Bean(name = "entityManagerFactory")
-//    public LocalContainerEntityManagerFactoryBean entityManagerFactory(
-//            @Qualifier("academicDataSource") DataSource dataSource) {
-//
-//        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-//        em.setDataSource(dataSource);
-//
-//        // ASEGÚRATE de incluir el paquete del convertidor si no está bajo los de entidades
-//        em.setPackagesToScan(
-//                "com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql"
-//        );
-//
-//        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-//        vendorAdapter.setDatabasePlatform("org.hibernate.dialect.PostgreSQLDialect");
-//        em.setJpaVendorAdapter(vendorAdapter);
-//
-//        Properties props = new Properties();
-//        props.setProperty("hibernate.hbm2ddl.auto", "update");
-//        // Esto ayuda a Hibernate 6 a manejar UUIDs nativos de Postgres
-//        props.setProperty("hibernate.type.preferred_uuid_jdbc_type", "CHAR");
-//        em.setJpaProperties(props);
-//
-//        return em;
-//    }
-
-//    @Bean(name = "entityManagerFactory")
-//    public LocalContainerEntityManagerFactoryBean entityManagerFactory(
-//            @Qualifier("academicDataSource") DataSource dataSource) {
-//
-//        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-//        em.setDataSource(dataSource);
-//
-//        // Escanea la raíz del adaptador de persistencia para encontrar Entidades Y el Converter
-//        em.setPackagesToScan(
-//                "com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql"
-//        );
-//
-//        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-//        vendorAdapter.setDatabasePlatform("org.hibernate.dialect.PostgreSQLDialect");
-//        em.setJpaVendorAdapter(vendorAdapter);
-//
-//        Properties props = new Properties();
-//        props.setProperty("hibernate.hbm2ddl.auto", "update");
-//        props.setProperty("hibernate.show_sql", "true");
-//
-//        // IMPORTANTE: Cambia CHAR por UUID para que Postgres use su tipo nativo
-//        props.setProperty("hibernate.type.preferred_uuid_jdbc_type", "UUID");
-//
-//        em.setJpaProperties(props);
-//
-//        return em;
-//    }
-
+    //
     @Bean(name = "entityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(
             @Qualifier("academicDataSource") DataSource dataSource) {
@@ -139,18 +69,16 @@ public class AcademicPostgreSQLConfig {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
 
-        // Escanea la raíz para asegurar que encuentre Entidades Y Convertidores
         em.setPackagesToScan("com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql");
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        // Deja que Hibernate detecte el dialecto automáticamente o usa el de Postgres
-        vendorAdapter.setDatabasePlatform("org.hibernate.dialect.PostgreSQLDialect");
         em.setJpaVendorAdapter(vendorAdapter);
 
         Properties props = new Properties();
         props.setProperty("hibernate.hbm2ddl.auto", "update");
-        // Cambiamos a 'uuid' para que sea compatible con el tipo nativo de Postgres
-        props.setProperty("hibernate.type.preferred_uuid_jdbc_type", "uuid");
+        props.setProperty("hibernate.show_sql", "true");
+        props.setProperty("hibernate.format_sql", "true");
+
         em.setJpaProperties(props);
 
         return em;

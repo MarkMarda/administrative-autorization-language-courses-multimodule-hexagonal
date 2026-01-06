@@ -16,6 +16,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.util.List;
+import java.util.UUID;
 
 @SuperBuilder
 @NoArgsConstructor
@@ -27,10 +28,9 @@ import java.util.List;
 public class StudentEntity extends GenericEntity {
     @Id
     @JdbcTypeCode(SqlTypes.UUID)
-    //@GeneratedValue(strategy = GenerationType.UUID)
-    @Convert(converter = IdentityAttributeConverter.class)
-    @Column(name = "student_id", nullable = false)
-    private Identity id;
+    //@Convert(converter = IdentityAttributeConverter.class) In case is useful
+    @Column(name = "student_id", nullable = false, columnDefinition = "uuid")
+    private UUID id;
 
     @NotNull(message = "firstName is required")
     @Column(name = "student_first_name", nullable = false)
