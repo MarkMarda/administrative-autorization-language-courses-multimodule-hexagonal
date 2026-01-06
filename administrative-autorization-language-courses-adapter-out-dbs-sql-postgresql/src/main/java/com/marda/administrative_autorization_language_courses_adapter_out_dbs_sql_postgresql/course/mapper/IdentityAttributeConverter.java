@@ -6,7 +6,7 @@ import jakarta.persistence.Converter;
 
 import java.util.UUID;
 
-@Converter(autoApply = true)
+@Converter()
 public class IdentityAttributeConverter implements AttributeConverter<Identity, UUID> {
     @Override
     public UUID convertToDatabaseColumn(Identity identity) {

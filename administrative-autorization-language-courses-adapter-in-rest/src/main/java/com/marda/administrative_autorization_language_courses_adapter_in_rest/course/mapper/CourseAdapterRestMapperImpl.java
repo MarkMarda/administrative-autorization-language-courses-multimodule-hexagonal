@@ -12,7 +12,7 @@ public class CourseAdapterRestMapperImpl implements CourseAdapterRestMapper{
     public CourseQueryResponseDto toDto(Course course) {
         return CourseQueryResponseDto
                 .builder()
-                .id(course.getId())
+                .id(course.getId().asUuid())
                 .name(course.getName())
                 .code(course.getCode())
                 .level(course.getLevel())

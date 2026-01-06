@@ -10,8 +10,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.JavaType;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
+import org.hibernate.type.descriptor.java.UUIDJavaType;
 
 import java.util.UUID;
 
@@ -24,11 +26,10 @@ import java.util.UUID;
 @Entity(name = "CourseEntity")
 public class CourseEntity extends GenericEntity {
     @Id
+    //@Convert(converter = IdentityAttributeConverter.class) In case is useful
     @JdbcTypeCode(SqlTypes.UUID)
-    //@GeneratedValue(strategy = GenerationType.UUID)
-    @Convert(converter = IdentityAttributeConverter.class)
-    @Column(name = "course_id", nullable = false)
-    private Identity id;
+    @Column(name = "course_id", nullable = false, columnDefinition = "uuid")
+    private UUID id;
 
     //B2-2025-ENG
     @NotNull(message = "code is required")
