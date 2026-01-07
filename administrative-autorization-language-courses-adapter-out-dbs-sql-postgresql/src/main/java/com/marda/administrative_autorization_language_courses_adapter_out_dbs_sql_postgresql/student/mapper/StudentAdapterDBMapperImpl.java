@@ -3,6 +3,7 @@ package com.marda.administrative_autorization_language_courses_adapter_out_dbs_s
 import com.marda.administrative_authorization_language_courses_domain.base.Identity;
 import com.marda.administrative_authorization_language_courses_domain.exceptions.DomainException;
 import com.marda.administrative_authorization_language_courses_domain.person.Student;
+import com.marda.administrative_authorization_language_courses_domain.person.vo.Email;
 import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.student.entity.StudentEntity;
 import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.student.exception.StudentAdapterDBException;
 
@@ -22,7 +23,7 @@ public class StudentAdapterDBMapperImpl implements StudentAdapterDBMapper {
                 .idCredential(student.getIdCredential())
                 .enrolledLanguageCourses(student.getEnrolledLanguageCourses())
                 .phoneNumber(student.getPhoneNumber())
-                .email(student.getEmail())
+                .email(student.getEmail().getValue())
                 .build();
     }
 
@@ -39,7 +40,7 @@ public class StudentAdapterDBMapperImpl implements StudentAdapterDBMapper {
                     studentEntity.getIdCredential(),
                     studentEntity.getEnrolledLanguageCourses(),
                     studentEntity.getPhoneNumber(),
-                    studentEntity.getEmail()
+                    Email.fromDb(studentEntity.getEmail())
             );
         } catch (DomainException e) {
             throw new StudentAdapterDBException(e);

@@ -6,6 +6,10 @@ import com.marda.administrative_autorization_language_courses_adapter_in_rest.co
 import com.marda.administrative_autorization_language_courses_adapter_in_rest.course.adapter.query.CourseQueryRestAdapter;
 import com.marda.administrative_autorization_language_courses_adapter_in_rest.course.mapper.CourseAdapterRestMapper;
 import com.marda.administrative_autorization_language_courses_adapter_in_rest.course.mapper.CourseAdapterRestMapperImpl;
+import com.marda.administrative_autorization_language_courses_adapter_in_rest.student.adapter.command.StudentCommandFacade;
+import com.marda.administrative_autorization_language_courses_adapter_in_rest.student.adapter.command.StudentCommandRestAdapter;
+import com.marda.administrative_autorization_language_courses_adapter_in_rest.student.mapper.StudentAdapterRestMapper;
+import com.marda.administrative_autorization_language_courses_adapter_in_rest.student.mapper.StudentAdapterRestMapperImpl;
 import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.course.adapter.command.CourseCommandCreatePostgreSQLDBAdapter;
 import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.course.adapter.query.CourseQueryPostgreSQLDBAdapter;
 import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.course.mapper.CourseAdapterDBMapper;
@@ -21,6 +25,7 @@ import com.marda.administrative_autorization_language_courses_application.course
 import com.marda.administrative_autorization_language_courses_application.course.port.out.CourseQueryFindByCoursePort;
 import com.marda.administrative_autorization_language_courses_application.course.service.CourseCommandCreateService;
 import com.marda.administrative_autorization_language_courses_application.course.service.CourseQueryService;
+import com.marda.administrative_autorization_language_courses_application.student.port.in.StudentCommandCreateUseCase;
 import com.marda.administrative_autorization_language_courses_application.student.port.out.StudentCommandCreatePort;
 import com.marda.administrative_autorization_language_courses_application.student.service.StudentCommandCreateService;
 import jakarta.persistence.EntityManagerFactory;
@@ -164,6 +169,19 @@ public class AcademicPostgreSQLConfig {
         return new CourseCommandRestAdapter(courseCommandFacade);
     }
 
+    @Bean
+    StudentCommandFacade studentCommandFacade(
+            StudentCommandCreateUseCase studentCommandCreateUseCase,
+            StudentAdapterRestMapper studentAdapterRestMapper
+    ) {
+        return new StudentCommandFacade(studentCommandCreateUseCase, studentAdapterRestMapper);
+    }
+
+    @Bean
+    StudentCommandRestAdapter studentCommandRestAdapter(StudentCommandFacade studentCommandFacade) {
+        return new StudentCommandRestAdapter(studentCommandFacade);
+    }
+
     //Mappers
     // Mapper - DB
     @Bean
@@ -180,5 +198,10 @@ public class AcademicPostgreSQLConfig {
     @Bean
     CourseAdapterRestMapper courseAdapterRestMapper() {
         return new CourseAdapterRestMapperImpl();
+    }
+
+    @Bean
+    StudentAdapterRestMapper studentAdapterRestMapper() {
+        return new StudentAdapterRestMapperImpl();
     }
 }

@@ -3,6 +3,7 @@ package com.marda.administrative_autorization_language_courses_application.stude
 import com.marda.administrative_authorization_language_courses_domain.base.Identity;
 import com.marda.administrative_authorization_language_courses_domain.exceptions.DomainException;
 import com.marda.administrative_authorization_language_courses_domain.person.Student;
+import com.marda.administrative_authorization_language_courses_domain.person.vo.Email;
 import com.marda.administrative_autorization_language_courses_application.student.exception.StudentApplicationException;
 import com.marda.administrative_autorization_language_courses_application.student.port.in.StudentCommandCreateUseCase;
 import com.marda.administrative_autorization_language_courses_application.student.port.in.dtos.CreateStudentCommand;
@@ -16,7 +17,7 @@ public class StudentCommandCreateService implements StudentCommandCreateUseCase 
     }
 
     @Override
-    public void createStudent(CreateStudentCommand createStudentCommand) throws StudentApplicationException {
+    public Student createStudent(CreateStudentCommand createStudentCommand) throws StudentApplicationException {
         Identity id = Identity.generate();
 
         try {
@@ -30,10 +31,11 @@ public class StudentCommandCreateService implements StudentCommandCreateUseCase 
                     createStudentCommand.idCredential(),
                     createStudentCommand.enrolledLanguageCourses(),
                     createStudentCommand.phoneNumber(),
-                    createStudentCommand.email()
+                    Email.create(String.valueOf(createStudentCommand.email()))
+                    //Email.create(createStudentCommand.email()) in case change Email to String
             );
 
-            studentCommandCreatePort.saveStudent(student);
+            return studentCommandCreatePort.saveStudent(student);
 
         } catch (DomainException e) {
             throw new StudentApplicationException(e.getMessage(), e);

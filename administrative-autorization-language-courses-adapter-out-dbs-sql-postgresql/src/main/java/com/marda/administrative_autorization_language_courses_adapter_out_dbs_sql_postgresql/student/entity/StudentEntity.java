@@ -1,10 +1,6 @@
 package com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.student.entity;
 
-import com.marda.administrative_authorization_language_courses_domain.base.Identity;
-import com.marda.administrative_authorization_language_courses_domain.person.vo.Email;
 import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.base.GenericEntity;
-import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.course.mapper.IdentityAttributeConverter;
-import com.marda.administrative_autorization_language_courses_adapter_out_dbs_sql_postgresql.student.mapper.EmailAttributeConverter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -15,6 +11,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,7 +45,7 @@ public class StudentEntity extends GenericEntity {
 
     @NotNull(message = "birthDate is required")
     @Column(name = "student_birth_date")
-    private String birthDate;
+    private LocalDate birthDate;
 
     @NotNull(message = "idCredential is required")
     @Column(name = "student_id_credential")
@@ -62,8 +59,8 @@ public class StudentEntity extends GenericEntity {
     private String phoneNumber;
 
     @JdbcTypeCode(SqlTypes.VARCHAR)
-    @Convert(converter = EmailAttributeConverter.class)
+    //@Convert(converter = EmailAttributeConverter.class)
     @NotNull(message = "email is required")
     @Column(name = "student_email")
-    private Email email;
+    private String email;
 }

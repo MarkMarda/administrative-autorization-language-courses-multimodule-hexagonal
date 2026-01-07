@@ -4,6 +4,7 @@ import com.marda.administrative_authorization_language_courses_domain.base.Gener
 import com.marda.administrative_authorization_language_courses_domain.base.Identity;
 import com.marda.administrative_authorization_language_courses_domain.exceptions.DomainException;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Person {
@@ -12,7 +13,7 @@ public class Person {
     private final String middleName;
     private final String firstSurname;
     private final String secondSurname;
-    private final String birthDate;
+    private final LocalDate birthDate;
 
     private static final String MESSAGE_NOT_BLANK = "must not be blank";
     private static final String MANDATORY_FIRST_NAME = "firstName";
@@ -24,7 +25,7 @@ public class Person {
             String middleName,
             String firstSurname,
             String secondSurname,
-            String birthDate
+            LocalDate birthDate
     ) throws DomainException {
         this.id = Objects.requireNonNull(id);
         this.firstName = requireNotBlank(firstName, MANDATORY_FIRST_NAME);
@@ -62,7 +63,7 @@ public class Person {
         return secondSurname;
     }
 
-    public String getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 }

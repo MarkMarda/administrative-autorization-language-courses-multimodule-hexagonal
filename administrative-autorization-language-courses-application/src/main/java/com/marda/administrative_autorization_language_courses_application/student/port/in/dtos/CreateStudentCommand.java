@@ -4,6 +4,7 @@ import com.marda.administrative_authorization_language_courses_domain.exceptions
 import com.marda.administrative_authorization_language_courses_domain.person.vo.Email;
 import com.marda.administrative_autorization_language_courses_application.student.exception.StudentApplicationException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,7 +13,7 @@ public record CreateStudentCommand(
         String middleName,
         String firstSurname,
         String secondSurname,
-        String birthDate,
+        LocalDate birthDate,
         Long idCredential,
         List<String> enrolledLanguageCourses,
         String phoneNumber,
@@ -33,7 +34,7 @@ public record CreateStudentCommand(
 
             requireNotBlank(firstName, MANDATORY_FIRST_NAME);
             requireNotBlank(firstSurname, MANDATORY_FIRST_SURNAME);
-            requireNotBlank(birthDate, MANDATORY_BIRTH_DATE);
+            Objects.requireNonNull(birthDate, MANDATORY_BIRTH_DATE);
             requireNotBlank(phoneNumber, MANDATORY_PHONE_NUMBER);
             Objects.requireNonNull(idCredential, MANDATORY_ID_CREDENTIAL);
             Objects.requireNonNull(enrolledLanguageCourses, MANDATORY_ENROLLED_COURSE);

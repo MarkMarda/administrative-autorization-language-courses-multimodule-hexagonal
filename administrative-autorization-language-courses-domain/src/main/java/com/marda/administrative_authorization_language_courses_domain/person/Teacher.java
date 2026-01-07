@@ -4,6 +4,7 @@ import com.marda.administrative_authorization_language_courses_domain.base.Ident
 import com.marda.administrative_authorization_language_courses_domain.exceptions.DomainException;
 import com.marda.administrative_authorization_language_courses_domain.person.vo.Email;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Teacher extends Person{
@@ -18,7 +19,7 @@ public class Teacher extends Person{
             String middleName,
             String firstSurname,
             String secondSurname,
-            String birthDate,
+            LocalDate birthDate,
             Email email,
             String dni,
             String professionalLicence, String phoneNumber
