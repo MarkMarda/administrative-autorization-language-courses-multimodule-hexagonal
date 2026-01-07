@@ -1,9 +1,10 @@
 package com.marda.administrative_autorization_language_courses_application.student.port.in;
 
+import com.marda.administrative_authorization_language_courses_domain.person.Student;
 import com.marda.administrative_autorization_language_courses_application.student.exception.StudentApplicationException;
 import com.marda.administrative_autorization_language_courses_application.student.port.in.dtos.CreateStudentCommand;
 
 @FunctionalInterface
 public interface StudentCommandCreateUseCase {
-    void createStudent(CreateStudentCommand createStudentCommand) throws StudentApplicationException;
+    Student createStudent(CreateStudentCommand createStudentCommand) throws StudentApplicationException;
 }

@@ -29,6 +29,25 @@ public class Email {
         return new Email(value);
     }
 
+    /**
+     * Factory used when reconstructing domain objects
+     * from persisted state (e.g., database records).
+     *
+     * Throws IllegalStateException if persisted data is invalid.
+     */
+    public static Email fromDb(String value) {
+        try {
+            return create(value);
+        } catch (DomainException e) {
+            throw new IllegalStateException("Invalid email in DB", e);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
     public String getValue() {
         return value;
     }

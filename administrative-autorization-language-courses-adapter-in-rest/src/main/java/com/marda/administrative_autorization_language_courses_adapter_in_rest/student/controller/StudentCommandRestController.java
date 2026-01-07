@@ -1,0 +1,17 @@
+package com.marda.administrative_autorization_language_courses_adapter_in_rest.student.controller;
+
+import com.marda.administrative_autorization_language_courses_adapter_in_rest.student.dtos.StudentCreateRequestDto;
+import com.marda.administrative_autorization_language_courses_adapter_in_rest.student.dtos.StudentCreateResponseDto;
+import com.marda.administrative_autorization_language_courses_adapter_in_rest.student.exception.StudentAdapterRestException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import static com.marda.administrative_autorization_language_courses_adapter_in_rest.constants.APIConstants.API_STUDENT_COMMAND;
+
+@RequestMapping(API_STUDENT_COMMAND)
+public interface StudentCommandRestController {
+    @PostMapping
+    ResponseEntity<StudentCreateResponseDto> createStudent(@RequestBody StudentCreateRequestDto studentCreateRequestDto) throws StudentAdapterRestException;
+}
