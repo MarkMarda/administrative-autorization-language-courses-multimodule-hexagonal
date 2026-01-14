@@ -48,11 +48,33 @@ public final class Authorization {
     }
 
     public void submit() throws AuthorizationException {
-        if (status != AuthorizationStatus.DRAFT) throw new AuthorizationException("Only draft can be submitted");
+        if (status != AuthorizationStatus.DRAFT && status != AuthorizationStatus.NEEDS_SUBSANATION) throw new AuthorizationException("Authorization cannot be submitted");
+
         // Validate mandatory requirements present? (domain rule)
+        // if (!hasCompletedMandatoryRequirements()) throw new AuthorizationException("Missing required documents");
+
         this.status = AuthorizationStatus.SUBMITTED;
+
         addTracking(statusPrevious("DRAFT"), "SUBMITTED", null, "Solicitud enviada por el estudiante");
+
         touch();
+    }
+
+    public void startReview() throws AuthorizationException {
+        if (status != AuthorizationStatus.SUBMITTED) throw new AuthorizationException("Must be submitted first");
+
+        this.status = AuthorizationStatus.IN_REVIEW;
+
+        addTracking(statusPrevious("IN_REVIEW"), "SUBMITTED", null, "Solicitud en revisión");
+
+        touch();
+    }
+
+    public void approve() throws AuthorizationException {
+        if (status != AuthorizationStatus.IN_REVIEW) throw new AuthorizationException("Must be under review");
+
+        this.status = AuthorizationStatus.APPROVED;
+
     }
 
     public void addDocument(Document doc) {

@@ -7,5 +7,6 @@ public enum AuthorizationStatus {
     NEEDS_SUBSANATION,
     APPROVED,
     REJECTED,
-    CLOSED
+    CLOSED, // When for period someone cancel
+    CANCELLED // When person interested cancel
 }
